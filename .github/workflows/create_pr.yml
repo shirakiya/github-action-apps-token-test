@@ -16,6 +16,7 @@ jobs:
           app_id: ${{ secrets.GH_APP_ID }}
           private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Push
+        id: push
         run: |
           ID="${{ github.run_id }}_${{ github.run_attempt }}"
           BRANCH="new_version_released_$ID"
@@ -28,8 +29,11 @@ jobs:
           COMMIT_MESSAGE="create pull-request by $ID"
           git commit -m "$COMMIT_MESSAGE" --allow-empty
           git push origin $BRANCH
+
+          echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
       - name: Create pull-request
         run: |
-          gh pr create -B main -H $BRANCH -t "$COMMIT_MESSAGE" -b "This pull-request is created by GitHub Actions."
+          gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
