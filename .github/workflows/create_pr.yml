@@ -20,7 +20,7 @@ jobs:
         run: |
           ID="${{ github.run_id }}_${{ github.run_attempt }}"
           BRANCH="new_version_released_$ID"
-          git switch -c $BRANCH
+          git switch -c $BRANCH main
 
           git config user.name github-actions
           git config user.email github-actions@github.com
