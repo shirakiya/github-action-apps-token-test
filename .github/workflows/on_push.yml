@@ -1,0 +1,10 @@
+name: Run by push
+
+on: push
+
+jobs:
+  run_by_push:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Running by push"
