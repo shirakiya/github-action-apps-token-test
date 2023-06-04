@@ -1,0 +1,10 @@
+name: Run by opening pull request
+
+on: pull_request
+
+jobs:
+  run_by_push:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Running by opening pull request"
