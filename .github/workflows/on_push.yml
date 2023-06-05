@@ -1,6 +1,9 @@
 name: Run by push
 
-on: push
+on:
+  push:
+    branches:
+      - "**"
 
 jobs:
   run_by_push:
