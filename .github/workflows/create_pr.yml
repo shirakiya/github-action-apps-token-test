@@ -12,14 +12,14 @@ jobs:
   create_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
-        id: generate_token
-        with:
-          app_id: ${{ secrets.GH_APP_ID }}
-          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      # - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+      #   id: generate_token
+      #   with:
+      #     app_id: ${{ secrets.GH_APP_ID }}
+      #     private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - uses: actions/checkout@v3
-        with:
-          token: ${{ steps.generate_token.outputs.token }}
+        # with:
+        #   token: ${{ steps.generate_token.outputs.token }}
       - name: Push
         id: push
         run: |
@@ -37,16 +37,9 @@ jobs:
 
           echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
           echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
-      # - name: Create pull-request
-      #   run: |
-      #     gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
-      #   env:
-      #     GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
       - name: Create pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: ${{ steps.push.outputs.branch }}
-          destination_branch: main
-          pr_title: ${{ steps.push.outputs.commit_message }}
-          pr_body: This pull-request is created by GitHub Actions.
-          github_token: ${{ steps.generate_token.outputs.token }}
+        run: |
+          gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
+        env:
+          # GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
