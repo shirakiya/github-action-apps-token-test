@@ -21,7 +21,6 @@ jobs:
         with:
           # token: ${{ steps.generate_token.outputs.token }}
           token: ${{ secrets.GH_PAT }}
-          persist-credentials: false
       - name: Push
         id: push
         run: |
