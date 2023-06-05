@@ -1,9 +1,6 @@
 name: Create a pull-request
 
-on:
-  push:
-    branches:
-      - test
+on: workflow_dispatch
 
 permissions:
   contents: write
@@ -12,15 +9,14 @@ jobs:
   create_pr:
     runs-on: ubuntu-latest
     steps:
-      # - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
-      #   id: generate_token
-      #   with:
-      #     app_id: ${{ secrets.GH_APP_ID }}
-      #     private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        id: generate_token
+        with:
+          app_id: ${{ secrets.GH_APP_ID }}
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - uses: actions/checkout@v3
         with:
-          # token: ${{ steps.generate_token.outputs.token }}
-          token: ${{ secrets.GH_CLASSIC_PAT }}
+          token: ${{ steps.generate_token.outputs.token }}
       - name: Push
         id: push
         run: |
@@ -42,5 +38,4 @@ jobs:
         run: |
           gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
         env:
-          # GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          GITHUB_TOKEN: ${{ secrets.GH_CLASSIC_PAT }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
