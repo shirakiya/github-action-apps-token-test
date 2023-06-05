@@ -37,8 +37,16 @@ jobs:
 
           echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
           echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
+      # - name: Create pull-request
+      #   run: |
+      #     gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
+      #   env:
+      #     GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
       - name: Create pull-request
-        run: |
-          gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
-        env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ steps.push.outputs.branch }}
+          destination_branch: main
+          pr_title: ${{ steps.push.outputs.commit_message }}
+          pr_body: This pull-request is created by GitHub Actions.
+          github_token: ${{ steps.generate_token.outputs.token }}
