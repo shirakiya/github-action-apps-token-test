@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           # token: ${{ steps.generate_token.outputs.token }}
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_CLASSIC_PAT }}
       - name: Push
         id: push
         run: |
@@ -43,4 +43,4 @@ jobs:
           gh pr create -B main -H ${{ steps.push.outputs.branch }} -t "${{ steps.push.outputs.commit_message }}" -b "This pull-request is created by GitHub Actions."
         env:
           # GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_CLASSIC_PAT }}
