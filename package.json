@@ -1,0 +1,18 @@
+{
+  "name": "github-action-apps-token-test",
+  "version": "0.0.1",
+  "description": "Test repository to investigate GitHub Apps token.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/shirakiya/github-action-apps-token-test.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/shirakiya/github-action-apps-token-test/issues"
+  },
+  "homepage": "https://github.com/shirakiya/github-action-apps-token-test#readme"
+}
