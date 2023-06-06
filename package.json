@@ -1,6 +1,6 @@
 {
   "name": "github-action-apps-token-test",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test repository to investigate GitHub Apps token.",
   "main": "index.js",
   "scripts": {
